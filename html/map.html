@@ -1,0 +1,666 @@
+<br>
+<div class="container-fluid">
+	<div id="page-content" class="row-fluid clearfix"> 
+
+		<!-- Sidebar for Inputs/Outputs -->
+		<div id="sidebar-lg" class="row-centered no-gutter">
+			
+			<!-- Input/Output/How-to Tabs -->
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#how-to" data-toggle="tab">How-To</a></li>
+				<li><a href="#inputs" data-toggle="tab">Inputs</a></li>
+				<li><a href="#outputs" data-toggle="tab">Outputs</a></li>
+			</ul>
+
+			<!-- Input/Output Panel Content-->
+			<div class="tab-content clearfix">
+
+				<!-- How-to Panel -->
+				<div class="tab-pane active" id="how-to">
+					<!-- How-to Subpanels-->
+					<div class="panel-group" id="how-to-accordion">
+
+						<!-- Overview Subpanel-->
+						<div class="panel panel-default">
+							<div class="panel-heading collapsed" data-toggle="collapse" data-parent="#how-to-accordion" data-target="#how-to-overview">
+								<h4 class="panel-title">
+									Overview
+								<i class="chevron fa fa-fw pull-right"></i></h4>
+							</div>
+							<div id="how-to-overview" class="panel-collapse collapse in">
+								<div class="panel-body" id = "overview-panel">
+									<p>This tool can be used to create cloud-free Landsat composites of a study area, perform change detection, create land cover classifications using Collect Earth Online training data, and export the results. The workflow is organized by Inputs and Outputs, each with their own tab.</p>
+									<p>The <em>Inputs</em> are all of the parameters and settings that the user must specify. These include inputs related to training data, composites, change detection, visualization, and other more advanced settings. Go through each of the sections one at a time, and hover your cursor over the question marks (
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Example">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+									) to read about each input. For more information, see the detailed tutorials in the section below. When you have filled in all of the inputs, click <b>Run</b>.</p>
+									<p>The <em>Outputs</em> are all of the visualizations, summary data, and export functionality that result from running the tool. These include the maps, change histogram, model accuracy, and exports. They will be available once the the tool has been run. Again, you can hover your cursor over the question marks (
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Example">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+									) to read about each output. For more information, see the detailed tutorials in the section below.</p>
+								</div>
+							</div>
+						</div> <!-- End Overview Subpanel-->
+
+						<!-- Tutorials Subpanel-->
+						<div class="panel panel-default">
+							<div class="panel-heading collapsed" data-toggle="collapse" data-parent="#how-to-accordion" data-target="#how-to-tutorials">
+								<h4 class="panel-title">
+									Tutorials
+								<i class="chevron fa fa-fw pull-right"></i></h4>
+							</div>
+							<div id="how-to-tutorials" class="panel-collapse collapse in">
+								<div class="panel-body" id = "tutorials-panel">
+									<p>There are three detailed PDF tutorials and exercise data available for learning how to use all of the features of the tool:</p>
+									<ul>
+										<li><a href="../pdf/Ex_1_Cover_Mapper_Setup.pdf" target="_blank">Setting up the tool</a></li>
+										<li><a href="../pdf/Ex_2_Cover_Mapper_Results_Exports.pdf" target="_blank">Reviewing and exporting results from the tool</a></li>
+										<li><a href="../pdf/Ex_3_Cover_Mapper_Troubleshooting.pdf" target="_blank">Troubleshooting the tool</a></li>
+										<li><a href="../pdf/Exercise_Data.zip" target="_blank">Exercise Data</a></li>
+									</ul>
+								</div>
+							</div>
+						</div> <!-- End Tutorials Subpanel-->
+
+					</div>
+				</div> <!-- End How-to Panel-->
+
+				<!-- Input Panel -->
+				<div class="tab-pane" id="inputs">
+
+					<!-- Input Subpanels-->
+					<div class="panel-group" id="input-accordion">
+
+						<!-- Training Data Subpanel--> 
+						<div class="panel panel-default">
+							<div class="panel-heading" data-toggle="collapse" data-parent="#input-accordion" data-target="#input-data">
+								<h4 class="panel-title">
+									Training Data
+								<i class="chevron fa fa-fw pull-right"></i></h4>
+							</div>
+							<div id="input-data" class="panel-collapse collapse in"> <!-- add "in" to class to start expanded-->
+								<div class="panel-body">
+									<div class="form-group">
+										<label for="trainingDataFusionTableID">Training Data:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Select a .csv exported from Collect Earth Online">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div class="input-group">
+											<input type="file" class = 'form-control' id="trainingDataUpload" name="upload" accept=".csv" multiple="multiple" />
+											<!-- <input type="text" class="form-control" id="trainingDataFusionTableID" placeholder="Paste ID Here"> -->
+											<span class="input-group-btn">
+												<!-- <button class="btn btn-secondary" id="trainingDataLoadButton" type="button">Load</button> -->
+												<button class="btn btn-secondary" id="trainingDataShowHideButton" type="button">Show/Hide</button>
+											</span>
+										</div>
+									</div>
+									<div id="trainingDataDropdowns" style="display: none;">
+										<div class="form-group">
+											<label for="trainingYears">Training Year:</label>
+											<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Select the year you would like to use for training.">
+											<i class="glyphicon glyphicon-question-sign"></i></a>
+											<div class="select-group">
+												<select class="trainingYearSelect">
+													<option selected>First load the training data.</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="coverClass">Cover Class:</label>
+											<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Select the column in your training data that contains the percent canopy cover information.">
+											<i class="glyphicon glyphicon-question-sign"></i></a>
+											<div class="select-group">
+												<select class="coverClassSelect">
+													<option selected>First load the training data.</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<!-- <div class="form-group">
+										<form class=row-fluid>
+											<label for="trainingYearSlider">Training Year:</label>
+											<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Set the year in which the training data were collected. Be careful to pick the correct year.">
+											<i class="glyphicon glyphicon-question-sign"></i></a>
+											<div class="slider-container">
+												<input type="range" id="trainingYearSlider" class="slider-single" value="2012" min="1984" max="2019" oninput="this.form.trainingYearOut.value=this.value">
+												<input type="text" id="trainingYearOut" class="slider-text-right" value="2012" disabled>
+											</div>
+										</form>
+									</div> -->
+									<br>
+									<div class="form-group">
+										<label for="canopyBreaks">Canopy Breaks:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Choose the three breaks to split the Cover Class into four different percent canopy cover classes or bins.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div class="slider-container">
+											<input type="text" id="canopyLowOut" class="slider-text-left" value="15" disabled style="display: none;">
+											<div id="canopyBreaksDualSlider" class="slider-triple"></div>
+											<input type="text" id="canopyHighOut" class="slider-text-right" value="80" disabled style="display: none;">
+											<!-- <br><br> -->
+											<input type="text" id="canopyMedOut" class="slider-text-center" value="40" disabled style="display: none;">
+										</div>
+									</div>
+									<!--  TEMPORARY FOR TESTING STYLES 
+									<ul class="list-group" id="export-manager">
+										<li class="list-group-item">
+											<h5 id="exportText-10">Malheur_2015_ClassificationOregon_2015_Cl</h5>
+											<span class="pull-right">
+												<button class="btn btn-primary exportBlock" id="exportStartButton-10" type="button">Start</button>
+											</span>
+										</li>
+										<li class="list-group-item">
+											<h5 id="exportText-9">Malheur_2007_Classification</h5>
+											<span class="pull-right">
+												<div class="exportBlock" id="exportInProgress-9" style="display:flex;flex-direction:row;">
+													<img src="img/GEE_logo_transparent.png" class="fa-spin progressSpinner" alt="Gear Spinner" style="width: 25px; height: 25px;">
+													<h5 id="exportInProgressText-9">12m 5s</h5>
+												</div>
+												<button class="btn btn-secondary exportBlock" id="exportCancelButton-9" type="button" style="display: none;">Cancel</button>
+											</span>
+										</li>
+										<li class="list-group-item">
+											<h5 id="exportText-8" style="background:#4D90FE;color:#fff;">Malheur_Change_No_Change</h5>
+											<span class="pull-right">
+												<a href="#" class="btn btn-primary exportBlock" id="exportDownloadButton-8" type="button">Download</a>
+											</span>
+										</li>
+										<li class="list-group-item">
+											<h5 id="exportText-7" style="background:#D64A38;color:#fff;">Malheur_2007_Composite</h5>
+											<span class="pull-right">
+												<h5 class="exportBlock" id="exportFailed-7">FAILED</h5>
+											</span>
+										</li>
+										<li class="list-group-item">
+											<h5 id="exportText-6" style="background:#777777;color:#fff">Malheur_2007_Composite</h5>
+											<span class="pull-right">
+												<h5 class="exportBlock" id="exportCanceled-6">CANCELED</h5>
+											</span>
+										</li>
+									</ul> -->
+								</div>
+							</div>
+						</div> <!-- End Training Data Subpanel-->
+
+						<!-- Composites Subpanel-->
+						<div class="panel panel-default">
+							<div class="panel-heading collapsed" data-toggle="collapse" data-parent="#input-accordion" data-target="#input-composites">
+								<h4 class="panel-title">
+									Composites
+								<i class="chevron fa fa-fw pull-right"></i></h4>
+							</div>
+							<div id="input-composites" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div class="form-group">
+										<label for="studyAreaFusionTableID">Study Area Geometry:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Either (1) Zip up a Shapefile and select the .zip file or (2) Draw a polygon for your study area with at least three points.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div class="changeRadio" id="studyAreaRadio" class = "btn-group-vertical">
+											<label class="btn well">
+												<input type="radio" id="ftRadio" value="0" name="studyradio" checked> Load Study Area (zipped .shp or .geojson)
+											</label>
+											
+											<label class="btn well">
+												<input type="radio" id="geomRadio" value="1" name="studyradio"> Draw Geometry
+											</label>
+										</div>
+										<div class="input-group" id="studyarea-ft-group">
+
+											<input type="file" class = 'form-control' id="studyAreaUpload" name="upload" accept=".zip,.geojson,.json"  />
+											
+											<!-- <input type="text" name = "studyAreaFusionTableID" class="form-control" id="studyAreaFusionTableID" placeholder="Paste ID Here"> -->
+
+										
+											<span class="input-group-btn">
+
+												<!-- <button class="btn btn-secondary" id="studyAreaLoadButton" type="button">Load</button> -->
+												<button class="btn btn-secondary" id="studyAreaShowHideButton" type="button">Show/Hide</button>
+											</span>
+										</div>
+										<div class="input-group" id="studyarea-geom-group" style="display: none;">
+											<h5><em>Click on left map to draw a polygon.</em></h5>
+											<span class="input-group-btn">
+												<button class="btn btn-secondary" id="geometryResetButton" type="button">Reset</button>
+												<button class="btn btn-secondary" id="geometryShowHideButton" type="button">Show/Hide</button>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="studyAreaName">Study Area Name:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="[Optional] Enter a short study area name to prefix the exported raster filenames.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<input type="text" class="form-control" id="studyAreaName" placeholder="Type Here">
+									</div>
+									<div class="form-group">
+										<form class=row-fluid>
+											<label for="startDate">Start Date:</label>
+											<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Set the start date for the temporal window for collecting imagery for the cloud-free composites.">
+											<i class="glyphicon glyphicon-question-sign"></i></a>
+											<div class="slider-container">
+												<input type="range" id="startDate" class="slider-single" value="150" min="1" max="365" oninput="this.form.startDateOut.value=dateFromDay(this.value)">
+												<input type="text" id="startDateOut" class="slider-text-right" value="5/30" disabled>
+											</div>
+										</form>
+									</div>
+									<br>
+									<div class="form-group">
+										<form class=row-fluid>
+											<label for="endDate">End Date:</label>
+											<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Set the end date for the temporal window for collecting imagery for the cloud-free composites.">
+											<i class="glyphicon glyphicon-question-sign"></i></a>
+											<div class="slider-container">
+												<input type="range" id="endDate" class="slider-single" value="250" min="1" max="365" oninput="this.form.endDateOut.value=dateFromDay(this.value)">
+												<input type="text" id="endDateOut" class="slider-text-right" value="9/07" disabled>
+											</div>
+										</form>
+									</div>
+									<br>
+									<div class="form-group">
+										<form class=row-fluid>
+											<label for="comparisonYearSlider">Comparison Year:</label>
+											<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Set the year that will be compared to the training year. This can be any year other than the training year.">
+											<i class="glyphicon glyphicon-question-sign"></i></a>
+											<div class="slider-container">
+												<input type="range" id="comparisonYearSlider" class="slider-single" value="2016" min="1984" max="2020" oninput="this.form.comparisonYearOut.value=this.value">
+												<input type="text" id="comparisonYearOut" class="slider-text-right" value="2016" disabled>
+											</div>
+										</form>
+									</div>
+									<br>
+									<div class="form-group">
+										<label for="yearsOfImagery">Years of Imagery:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Choose the number of year of imagery to include for each composite. A value of 1 will only include imagery from the chosen years, but may leave holes in the cloud-free composites.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div class="incrementer-group">
+											<input type='text' name='yearsOfImagery' value='1' class='qty'>
+											<input type='button' value='-' class='qtyminus' field='yearsOfImagery'>
+											<input type='button' value='+' class='qtyplus' field='yearsOfImagery'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="sensorCheckbox">Choose sensors:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Choose Landsat sensors for collecting imagery for the composites. Options are any combination of Landsat 4 TM (L4), Landsat 5 TM (L5), Landsat 7 ETM+ (L7), and Landsat 8 OLI (L8).">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div class="sensorCheckbox">
+											<label class="checkbox-inline">
+												<input type="checkbox" id="L4checkbox" value="L4" name="optcheck" checked> L4
+											</label>
+											<label class="checkbox-inline">
+												<input type="checkbox" id="L5checkbox" value="L5" name="optcheck" checked> L5
+											</label>
+											<label class="checkbox-inline">
+												<input type="checkbox" id="L7checkbox" value="L7" name="optcheck" checked> L7
+											</label>
+											<label class="checkbox-inline">
+												<input type="checkbox" id="L8checkbox" value="L8" name="optcheck" checked> L8
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> <!-- End Composites Subpanel-->
+
+						<!-- Change Detection Subpanel-->
+						<div class="panel panel-default">
+							<div class="panel-heading collapsed" data-toggle="collapse" data-parent="#input-accordion" data-target="#input-change">
+								<h4 class="panel-title">
+									Change Detection
+								<i class="chevron fa fa-fw pull-right"></i></h4>
+							</div>
+							<div id="input-change" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div class="form-group">
+										<label for="changeRadio">Change Detection Index:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Select a change detection index. Options are RdNBR (relative differenced Normalized Burn Ratio), dNBR (differenced Normalized Burn Ratio), dNDVI (differenced Normalized Difference Vegetation Index), or dSAVI (differenced Soil-Adjusted Vegetation Index; L = 0.5).">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div class="changeRadio">
+											<label class="radio-inline">
+												<input type="radio" id="RdNBRradio" value="RdNBR" name="optradio" checked> RdNBR
+											</label>
+											<label class="radio-inline">
+												<input type="radio" id="dNBRradio" value="dNBR" name="optradio"> dNBR
+											</label>
+											<label class="radio-inline">
+												<input type="radio" id="dNDVIradio" value="dNDVI" name="optradio"> dNDVI
+											</label>
+											<label class="radio-inline">
+												<input type="radio" id="dSAVIradio" value="dSAVI" name="optradio"> dSAVI
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="gainLossPercentiles">Gain/Loss Percentiles:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Set the threshold percentiles for gain/loss. Change detection index values between these percentiles will be considered no-change. Values outside the range are considered change.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div class="slider-container">
+											<input type="text" id="gainPercentileOut" class="slider-text-left" value="9" disabled>
+											<div id="gainLossPercentilesDualSlider" class="slider-double"></div>
+											<input type="text" id="lossPercentileOut" class="slider-text-right" value="91" disabled>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> <!-- End Change Detection Subpanel-->
+
+						<!-- Visualization Subpanel-->
+						<div class="panel panel-default">
+							<div class="panel-heading collapsed" data-toggle="collapse" data-parent="#input-accordion" data-target="#input-viz">
+								<h4 class="panel-title">
+									Visualization
+								<i class="chevron fa fa-fw pull-right"></i></h4>
+							</div>
+							<div id="input-viz" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div class="form-group">
+										<label for="mapArrangement">Map Arrangement:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Select whether you want the two output maps to be arranged left-right (i.e., side-by-side) or top-bottom.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div class="changeRadio" id="mapArrangeRadio">
+											<label class="radio-inline">
+												<input type="radio" id="leftRightRadio" value="0" name="mapradio" checked> Left-Right
+											</label>
+											<label class="radio-inline">
+												<input type="radio" id="topBottomRadio" value="1" name="mapradio"> Top-Bottom
+											</label>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="compositeBands">Composite Visualization Bands:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Choose which Landsat band combinations will be used to display the composites after running the application.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div class="changeRadio" id="compositeBandsRadio">
+											<label class="radio-inline">
+												<input type="radio" id="RGBRadio" value="0" name="bandradio"> True Color (Red / Green / Blue)
+											</label>
+											<br>
+											<label class="radio-inline">
+												<input type="radio" id="NRGRadio" value="1" name="bandradio"> Color Infrared (Near Infrared / Red / Green)
+											</label>
+											<br>
+											<label class="radio-inline">
+												<input type="radio" id="SNRRadio" value="2" name="bandradio" checked> False Color (Shortwave Infrared 1 / Near Infrared / Red)
+											</label>
+										</div>
+									</div>
+									<div class="form-group" id="class-color-pre" style="display: inline;">
+										<label for="classNamesColors">Colors / Class Names:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Change the colors for each class in the land cover maps either by typing in hex color codes or by using the color pickers.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<h5>First load the training data and choose the classification field.</h5>
+									</div>
+									<div class="form-group" id="class-color" style="display: none;">
+										<label for="classNamesColors">Colors / Class Names:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Change the colors for each class in the land cover maps either by typing in hex color codes or by using the color pickers.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div id="class-color-pairs"></div>
+									</div>
+									<div><button class="btn btn-secondary" id="refreshVizButton" type="button" style="display: none;">Update Layers</button></div>
+								</div>
+							</div>
+						</div> <!-- End Visualization Subpanel-->
+
+						<!-- Advanced Subpanel-->
+						<div class="panel panel-default">
+							<div class="panel-heading collapsed" data-toggle="collapse" data-parent="#input-accordion" data-target="#input-advanced">
+								<h4 class="panel-title">
+									Advanced
+								<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="These advanced settings are set properly by default, and do not need to be modified. The main reasons to change any of these settings are to: (1) fine-tune composite settings, (2) change the classification settings, or (3) handle memory-related errors.">
+								<i class="glyphicon glyphicon-question-sign"></i></a>
+								<i class="chevron fa fa-fw pull-right"></i></h4>
+							</div>
+							<div id="input-advanced" class="panel-collapse collapse">
+								<div class="panel-body">
+									<div class="form-group">
+										<form class=row-fluid>
+											<label for="cloudThreshold">Cloud Threshold:</label>
+											<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Set the threshold for excluding pixels from cloudy images. Lower values exclude more pixels.">
+											<i class="glyphicon glyphicon-question-sign"></i></a>
+											<div class="slider-container">
+												<input type="range" id="cloudThreshold" class="slider-single" value="20" min="0" max="100" oninput="this.form.cloudThresholdOut.value=this.value">
+												<input type="text" id="cloudThresholdOut" class="slider-text-right" value="20" disabled>
+											</div>
+										</form>
+									</div>
+									<br>
+									<div class="form-group">
+										<form class=row-fluid>
+											<label for="compositeBuffer">Composite Buffer (m):</label>
+											<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Set the distance in meters to buffer the composite area.">
+											<i class="glyphicon glyphicon-question-sign"></i></a>
+											<div class="slider-container">
+												<input type="range" id="compositeBuffer" class="slider-single" value="100" min="10" max="200" step="10" oninput="this.form.compositeBufferOut.value=this.value">
+												<input type="text" id="compositeBufferOut" class="slider-text-right" value="100" disabled>
+											</div>
+										</form>
+									</div>
+									<br>
+									<div class="form-group">
+										<form class=row-fluid>
+											<label for="compositePercentile">Composite Percentile:</label>
+											<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Set the percentile used to reduce the stack of images to form the composites. A value of 50 is equivalent to using the median.">
+											<i class="glyphicon glyphicon-question-sign"></i></a>
+											<div class="slider-container">
+												<input type="range" id="compositePercentile" class="slider-single" value="50" min="1" max="99" oninput="this.form.compositePercentileOut.value=this.value">
+												<input type="text" id="compositePercentileOut" class="slider-text-right" value="50" disabled>
+											</div>
+										</form>
+									</div>
+									<br>
+									<div class="form-group">
+										<form class=row-fluid>
+											<label for="rfTrees">Random Forest Trees:</label>
+											<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Set the number of random forest trees to use in the classification model.">
+											<i class="glyphicon glyphicon-question-sign"></i></a>
+											<div class="slider-container">
+												<input type="range" id="rfTrees" class="slider-single" value="100" min="1" max="250" oninput="this.form.rfTreesOut.value=this.value">
+												<input type="text" id="rfTreesOut" class="slider-text-right" value="100" disabled>
+											</div>
+										</form>
+									</div>
+									<br>
+									<div class="form-group">
+										<form class=row-fluid>
+											<label for="reducerScaleSlider">Reducer Scale (m):</label>
+											<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Set the scale at which the composites are sampled to produce the model training data. Can be thought of as the size of the training plots.">
+											<i class="glyphicon glyphicon-question-sign"></i></a>
+											<div class="slider-container">
+												<input type="range" id="reducerScaleSlider" class="slider-single" value="30" min="30" max="300" step="30" oninput="this.form.reducerScaleOut.value=this.value">
+												<input type="text" id="reducerScaleOut" class="slider-text-right" value="30" disabled>
+											</div>
+										</form>
+									</div>
+									<br>
+									<div class="form-group">
+										<label for="tileScale">Tile Scale:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Set the scaling factor used to reduce aggregation tile size. Using a larger tile scale may enable computations that run out of memory with the default value of 2.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div class="incrementer-group">
+											<input type='text' name='tileScale' value='2' class='qty'>
+											<input type='button' value='-' class='qtyminus' field='tileScale'>
+											<input type='button' value='+' class='qtyplus' field='tileScale'>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="epsgNumber">EPSG Number:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Enter the EPSG code used to specify the exported raster's coordinate reference system. Default value is 4326 (Web Mercator).">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<input type="text" class="form-control" id="epsgNumber" placeholder="4326">
+									</div>
+								</div>
+							</div>
+						</div> <!-- End Advanced Subpanel-->
+
+						<!-- Run Button-->
+						<div class="panel-footer">
+							<span class="input-group-btn">
+								<button class="btn btn-primary" id="runButton">Run</button>
+								<button class="btn btn-secondary" id="inputsResetButton" type="button">Reset All</button>
+							</span>
+						</div> 
+					</div>
+				</div> <!-- End input panel -->
+
+				<!-- Output Panel -->
+				<div class="tab-pane" id="outputs">
+
+					<!-- Output Subpanels-->
+					<div class="panel-group" id="output-accordion">
+
+						<!-- Histogram Subpanel-->
+						<div class="panel panel-default">
+							<div class="panel-heading" data-toggle="collapse" data-parent="#output-accordion" data-target="#output-hist">
+								<h4 class="panel-title">
+									Change Histogram
+								<i class="chevron fa fa-fw pull-right"></i></h4>
+							</div>
+							<div id="output-hist" class="panel-collapse collapse in"> <!-- add "in" to class to start expanded-->
+								<div class="panel-body" id = "histogram-panel-pre">
+									Click the Run button at the bottom of the "Inputs" tab to get outputs.
+								</div>
+								<div class="panel-body" id = "histogram-panel-running" style="display: none;">
+									<img src="img/GEE_logo_transparent.png" class="fa-spin" alt="Gear Spinner" style="width: 100px; height: 100px; margin-left: 150px;">
+								</div>
+								<div class="panel-body" id = "histogram-panel-fail" style="display: none;">
+									<h5>Earth Engine failed to calculate change histogram.</h5>
+								</div>
+								<div class="panel-body" id = "histogram-panel-post" style="display: none;">
+									<div class="form-group">
+										<label for="histogramChart">Difference Image Histogram:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Displays the frequency of binned difference index values across the composite area. Bars below the gain percentile represent change (gain). Bars above the loss percentile represent change (loss). Other bars represent no-change.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<div id="chart-div"></div>
+										<div id="legend-block">
+											<table id="table-legend">
+												<tr>
+												<td class="legend">
+													<table><tr>
+														<td class="color" id="gain"</td>
+														<td class="label">Gain</td>
+													</tr></table></td>
+												<td class="legend">
+													<table><tr>
+													<td class="color" id="no-change"></td>
+													<td class="label">No Change</td>
+													</tr></table></td>
+												<td class="legend">
+													<table><tr>
+													<td class="color" id="loss"></td>
+													<td class="label">Loss</td>
+													</tr></table></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="gainThreshold">Gain Threshold:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Difference index threshold value corresponding to the gain percentile.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+									</div>
+									<div class="form-group">
+										<label for="lossThreshold">Loss Threshold:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Difference index threshold value corresponding to the loss percentile.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+									</div>
+								</div>
+							</div>
+						</div> <!-- End Histogram Subpanel-->
+
+						<!-- Accuracy Subpanel-->
+						<div class="panel panel-default">
+							<div class="panel-heading collapsed" data-toggle="collapse" data-parent="#output-accordion" data-target="#output-accuracy">
+								<h4 class="panel-title">
+									Model Accuracy
+								<i class="chevron fa fa-fw pull-right"></i></h4>
+							</div>
+							<div id="output-accuracy" class="panel-collapse collapse">
+								<div class="panel-body" id = "accuracy-panel-pre">
+									Click the Run button at the bottom of the "Inputs" tab to get outputs.
+								</div>
+								<div class="panel-body" id = "accuracy-panel-running" style="display: none;">
+									<img src="img/GEE_logo_transparent.png" class="fa-spin" alt="Gear Spinner" style="width: 100px; height: 100px; margin-left: 150px;">
+								</div>
+								<div class="panel-body" id = "accuracy-panel-fail" style="display: none;">
+									<h5>Earth Engine failed to calculate model accuracy.</h5>
+								</div>
+								<div class="panel-body" id = "accuracy-panel-post" style="display: none;">
+									<h4> Random Forest </h4>
+									<div class="form-group">
+										<label for="rfConfusionMatrix">Confusion Matrix:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Comparison of actual and predicted values for the classification model for each land cover class using out-of-bag estimates.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+										<!-- <div id="table-div"></div> -->
+										<div><button class="btn btn-secondary" id="showConfMatButton" type="button">Show Confusion Matrix</button></div>
+									</div>
+									<div class="form-group">
+										<label for="rfAccuracy">Accuracy:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Overall classification model accuracy. Maximum possible value is 1.00 (100%)">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+									</div>
+									<div class="form-group">
+										<label for="rfKappa">Kappa:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Partial measure of the agreement between actual and predicted values that is due to random chance. Values greater than 0 suggest that the agreement is better than would be expected by chance.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+									</div>
+									<h4> Linear Regression </h4>
+									<div class="form-group">
+										<label for="lmRMSE">RMSE:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Root mean squared error for the linear regression model. A smaller error indicates greater accuracy (lower prediction error).">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+									</div>
+									<div class="form-group">
+										<label for="lmR2">Adjusted R2:</label>
+										<a class="q-tool-tip" data-toggle="tooltip" data-placement="right" title="Coefficient of determination that provides a measure of the goodness of fit of the linear regression model.">
+										<i class="glyphicon glyphicon-question-sign"></i></a>
+									</div>
+								</div>
+							</div>
+						</div> <!-- End Accuracy Subpanel-->
+
+						<!-- Exports Subpanel-->
+						<div class="panel panel-default">
+							<div class="panel-heading collapsed" data-toggle="collapse" data-parent="#output-accordion" data-target="#output-exports">
+								<h4 class="panel-title">
+									Exports
+								<i class="chevron fa fa-fw pull-right"></i></h4>
+							</div>
+							<div id="output-exports" class="panel-collapse collapse">
+								<div class="panel-body" id = "exports-panel-pre">
+									Click the Run button at the bottom of the "Inputs" tab to get outputs.
+								</div>
+								<div class="panel-body" id = "exports-panel-post" style="display: none;">
+									<h5> Click to export layers.</h5>
+									<ul class="list-group" id="export-manager"></ul>
+								</div>
+							</div>
+						</div> <!-- End Exports Subpanel-->
+
+					</div>
+				</div> <!-- End output panel -->
+
+			</div> <!-- End input/output panel content -->
+		</div> <!-- End side bar -->
+
+		<!-- Map Content -->
+		<div id="map-content" class="no-gutter">
+
+			<!-- Add Map 1 -->
+			<div id="map1" class="map-canvas col-xs-12 no-gutter"></div>
+
+			<!-- Left Map Layer Dropdown -->
+			<div class="dropdown" id="leftLayerSelect" style="display: none;">
+				<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Select layers
+				<span class="caret"></span></button>
+				<ul class="dropdown-menu" id="dropdown-menu-left"></ul>
+			</div>
+			<!-- Add Map 2 -->
+			<div id="map2" class="map-canvas col-xs-12 no-gutter" style="display: none;"></div>
+
+			<!-- Right Map Layer Dropdown -->
+			<div class="dropdown" id="rightLayerSelect" style="display: none;">
+				<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">Select layers
+				<span class="caret"></span></button>
+				<ul class="dropdown-menu" id="dropdown-menu-right"></ul>
+			</div>
+		</div> <!-- End Map Content -->
+
+	</div>
+
+</div> <!-- End page content

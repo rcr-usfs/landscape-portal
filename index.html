@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Landscape Pattern Monitoring Portal</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Load Favicon Icon (source: http://www.iconsdb.com/caribbean-blue-icons/tree-43-icon.html)-->
+		<link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico'/>
+		<!-- Load Bootstrap, Google Fonts, and Font Awesome styles -->
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+		<link href='https://fonts.googleapis.com/css?family=Bitter' rel='stylesheet'>
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+		<!-- Load custom CSS styles -->
+		<link href="css/common-style.css" rel="stylesheet">
+		<link href="css/map-style.css" rel="stylesheet">
+		<!-- <link href="css/nouislider.css" rel="stylesheet"> -->
+		<link href="css/nouislider.min.css" rel="stylesheet">	
+
+	</head>
+
+	<body>
+		<div class="wrap">
+			<!-- Navigation Bar -->
+			<nav class="navbar navbar-default navbar-fixed-top">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="">Landscape Pattern Monitoring Portal</a>
+					</div>
+					<ul class="nav navbar-nav">
+						<li><a href="home-page">Home</a></li>
+						<li><a href="about-page">About</a></li>
+						<li><a href="data-page">Collect Earth Online</a></li>
+						<li><a href="map-page">Cover Mapper</a></li>
+						<li><a href="frag-page">Landscape Metrics</a></li>
+						<li><a href="ref-page">References</a></li>
+						
+					</ul>
+				</div>
+			</nav> <!-- End Navigation Bar -->
+			<!-- Pages -->
+			<div class="pages" id="home-page"></div>
+			<div class="pages" id="about-page" style="display: none;"></div>
+			<div class="pages" id="data-page" style="display: none;"></div>
+			<div class="pages" id="map-page" style="display: none;"></div>
+			<div class="pages" id="frag-page" style="display: none;"></div>
+			<div class="pages" id="ref-page" style="display: none;"></div>
+			<!-- End Pages -->
+		</div>
+		<!-- Footer -->
+		<div id="footer">
+			<div class="container-fluid">
+				<a href="https://www.fs.fed.us/restoration/CFLRP/" target="_blank" class="CFLRP-logo"><img src='../img/usfslogo.png' style="height: 25px; margin-top: 10px; vertical-align: sub;">&nbsp;CFLR Program</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="https://apps.fs.usda.gov/gtac/" target="_blank"><img src='../img/GTAC_Logo_Inv.png' style="height: 16px; margin-top: 10px; vertical-align: sub;"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="http://www.bluemountainsforestpartners.org/" target="_blank" class="logo-text">Blue Mountains <span>Forest Partners</span></a>&nbsp;
+				<!-- 
+				<a href="https://twitter.com/forestservice" target="_blank"><img src='../img/twitter.png' style="height: 32px; margin-top: 6px;"></a>
+				<a href="https://www.facebook.com/pages/The-Forest-Service/1431984283714112?ref=hl" target="_blank"><img src='../img/facebook.png' style="height: 32px; margin-top: 6px;"></a>
+				-->
+				<a href="https://www.flickr.com/photos/blmoregon/28335541571/in/album-72157671183850426/" target="_blank" class="pull-right" style="padding-top: 15px;">Photo courtesy of BLM-Oregon</a>&nbsp;
+			</div>
+		</div> <!-- End Footer -->
+
+		<!-- Error Modal -->
+		<div id="errorModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<p></p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="modal fade" role="dialog" id="yearModal"> 
+
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+
+		      <div class="modal-header">
+		      	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		        <h3 class="modal-title">Training Data Year</h3>
+		        <br>
+		        <h5 class="modal-title">Cannot find year of training data- please specify</h5>
+		        
+		      </div>
+		      <div class="modal-body w-50">
+		        <label for="recipient-name" class="col-form-label">Year:</label>
+		        <input style = 'width:25%;'type="number" min="1940" max="2050" step="1"  value = '2012' class="form-control" id="modal-year-value">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+		        
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- Chart Modal -->
+		<div id="chartModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<div id="chart-modal-div"></div>
+						<div id="legend-block">
+							<table id="table-legend">
+								<tr>
+								<td class="legend">
+									<table><tr>
+										<td class="color" id="gain"</td>
+										<td class="label">Gain</td>
+									</tr></table></td>
+								<td class="legend">
+									<table><tr>
+									<td class="color" id="no-change"></td>
+									<td class="label">No Change</td>
+									</tr></table></td>
+								<td class="legend">
+									<table><tr>
+									<td class="color" id="loss"></td>
+									<td class="label">Loss</td>
+									</tr></table></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Confusion Matrix Modal -->
+		<div id="confMatModal" class="modal fade" role="dialog">
+			<div class="modal-dialog" id="confMat-dialog">
+				<div class="modal-content">
+					<div class="modal-body">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<div id="table-div"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Spinning Loader-->
+		<div id="gearSpinner" style="display: none;">
+			<img src="img/GEE_logo_transparent.png" class="fa-spin" alt="Gear Spinner" style="width: 100px; height: 100px;">
+		</div>
+
+		<!-- Progress Bar -->
+		<div class="progress" style="display: none;">
+			<div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+		</div>
+
+		<!-- Load jQuery and Bootstrap scripts -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<!-- Load Google Maps API -->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCEfhh_56VLoQEYIczNxJlrsPRWNYQ5NJE"></script>
+
+		<!-- Load Google Earth Engine API -->
+		<script src = "js/ee_api_js.js"></script>
+
+		<!-- Load Google Charts API -->
+		<script src="https://www.gstatic.com/charts/loader.js"></script>
+
+		<!-- Load custom JS scripts -->
+		<!-- <script src = 'js/nouislider.js'></script> -->
+		<script src = 'js/nouislider.min.js'></script>
+		<script src = 'js/jscolor.js'></script>
+		<script src = 'js/page-manager.js'></script>
+		<script src = 'js/inputs-manager.js'></script>
+		<script src = 'js/map-manager.js'></script>
+		<script src = 'js/chart-manager.js'></script>
+		<script src = 'js/table-manager.js'></script>
+		<script src = 'js/exports-manager.js'></script>
+		<script src = 'js/ee-run.js'></script>
+
+	</body>
+</html>

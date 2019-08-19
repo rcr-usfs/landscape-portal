@@ -1,0 +1,163 @@
+/***********
+ * OVERALL *
+ ***********/
+html, body {
+	height: 100%;
+}
+
+.container-fluid {
+	height: 100%;
+}
+
+/**********
+ * NAVBAR *
+ **********/
+.navbar {
+	width: 100%;
+	position: absolute;
+}
+
+.navbar-default {
+	background: rgba(0,0,0,0.65);
+	color: #fff;
+	border-color: #fff;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-brand:focus {
+	color: #fff;
+	font-weight: 700;
+}
+
+.navbar-default .navbar-brand:hover {
+	color: #A78144;
+}
+
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li>a:focus {
+	color: #fff;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+	color: #A78144;
+}
+
+.navbar-nav>li, .navbar-nav {
+  float: left;
+}
+
+/****************
+ * PAGE CONTENT *
+ ****************/
+/* Wrapper for page content to push down footer */
+.wrap {
+	min-height: 100%;
+	height: 100%;
+	/* Negative indent footer by its height */
+	margin: 0 auto -45px;
+	/* Pad bottom by footer height */
+	padding: 0 0 45px;
+	background-image: url("../img/BLM_Oregon_Sutton_Mountain_Painted_Hills.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.pages {
+	height: 100%;
+}
+
+#page-content {
+	height: 100%;
+	padding-top: 40px;
+	padding-bottom: 30px;
+	overflow: auto;
+	/*padding-top: 60px;
+	padding-bottom: 10px;*/
+}
+
+@media (max-width: 993px) {
+  #page-content {
+    padding-top: 80px;
+  }
+
+  #map-page {
+  	background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 90px,rgba(255,255,255,1) 91px,rgba(255,255,255,1) 100%) !important;
+  }
+
+  .navbar-brand {
+  	padding-bottom: 7px;
+  }
+
+  .navbar-nav>li>a {
+  	padding-top: 7px;
+  }
+}
+
+#map-page {
+	background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0) 50px,rgba(255,255,255,1) 51px,rgba(255,255,255,1) 100%);
+}
+
+.text-page {
+	padding: 30px;
+	margin-top: 10px;
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 850px;
+	background: rgba(0, 0, 0, 0.65);
+	color: #fff;
+}
+
+.tab {
+	margin-left: 40px;
+}
+
+/* link, unvisited link */
+a:link, a:visited {
+    color: #D0B467;
+}
+
+/* mouse over, selected link */
+a:hover, a:active {
+    color: #A78144;
+}
+
+/***********
+ * BUTTONS *
+ **********/
+.btn-secondary:hover {
+	background-color: #bfbfbf;
+	border-color: #A9A39E;
+}
+
+/***********
+ * FOOTER *
+ **********/
+ /* Set the fixed height of the footer here */
+#footer {
+	height: 45px;
+	background-color: rgba(0,0,0,0.65);
+	color: #fff;
+	border-color: #fff;
+}
+
+a.logo-text, a.logo-text:hover {
+	color: #00bad5;
+	font-family: "Bitter";
+	font-style: normal;
+	font-weight: 700;
+	font-size: 16px;
+	text-decoration: none;}
+
+.logo-text span, .logo-text:hover span {
+	color: #bbcc30;
+	font-weight: 400;
+}
+
+a.CFLRP-logo, a.CFLRP-logo:hover {
+	color: #FDB301;
+	font-family: "Bitter";
+	font-style: normal;
+	font-weight: 400;
+	font-size: 16px;
+	text-decoration: none;
+	vertical-align: middle;
+}

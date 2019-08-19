@@ -1,0 +1,522 @@
+/***********
+ * SIDEBAR *
+ **********/
+#sidebar-lg {
+	overflow-y: auto;
+    overflow-x: hidden;
+	height:100% !important;
+	width: 430px;
+	float: left;
+}
+
+
+//*****************************
+ * INPUT/OUTPUT TABS & PANELS *
+ ******************************/
+.nav-tabs > li.active > a {
+	background: #ddd !important;
+}
+
+.nav-tabs > li > a {
+	color: #555;
+}
+
+.tab-content {
+	background: rgb(242,242,242);
+	border: 1px solid #ddd;
+	/*height: calc(100% - 42px);*/
+}
+
+.panel-group {
+	margin-bottom: 0px;
+}
+
+
+/***********************
+ * ACCORDION SUBPANELS *
+ ***********************/
+.panel-heading {
+	cursor: pointer;
+}
+
+.panel-heading:hover {
+  background-color: #ddd !important;
+}
+
+.panel-heading .chevron:after {
+	content: "\f078";   
+}
+
+.panel-heading.collapsed .chevron:after {
+	content: "\f054"; 
+}
+
+.panel-title a {
+	display: inline;
+}
+
+
+/**********
+ * INPUTS *
+ **********/
+
+.slider-single {
+	width: 85% !important;
+	float: left;
+}
+
+.slider-double {
+	width: 71% !important;
+	margin-left: 10px;
+	margin-top: 4px;
+	display: inline-block;
+}
+
+.slider-triple {
+	width: 100% !important;
+	margin-top: 40px;
+	display: inline-block;
+}
+
+.slider-text-right {
+	float: right;
+	width: 12%;
+	text-align: center;
+	/*background: white;*/
+}
+
+.slider-text-left {
+	float: left;
+	width: 12%;
+	text-align: center;
+	/*background: white;*/
+}
+
+.slider-text-center {
+	display: inline-block;
+	width: 12%;
+	text-align: center;
+	margin-left: 45%;
+	/*background: white;*/
+}
+
+.noUi-horizontal {
+	height: 4px !important;
+	background: #E3DDD8 !important;
+	border: none !important;
+	border-radius: 0px !important;
+}
+
+.noUi-handle {
+	width: 10px !important;
+	height: 20px !important;
+	left: -5px !important;
+	background: #F4F2EF !important;
+	border: 1px solid #a9a39e !important;
+	border-radius: 0px !important;
+}
+
+.noUi-handle:before, .noUi-handle:after {
+	display: none !important;
+}
+
+.noUi-connect {
+    background: #a9a39e !important;
+}
+
+.noUi-tooltip {
+	background: #EBEBE4 !important;
+	border: 1px solid #A9A9A9 !important;
+	border-radius: 0px !important;
+	padding-top: 3px !important;
+    padding-bottom: 3px !important;
+}
+
+.qty {
+	width: 20%;
+	text-align: right;
+	padding-right: 5px;
+}
+
+.jscolor {
+	width: 80px;
+	float: left;
+	text-align: center;
+}
+
+.color-group {
+	display: flex; 
+	flex-direction: row;
+	padding-bottom: 10px;
+}
+
+.color-group > h5 {
+	padding-left: 10px;
+}
+
+.btn-secondary {
+	border: 1px solid #a9a39e;
+}
+
+#runButton {
+	width: 80%;
+}
+
+#refreshVizButton {
+	margin-top: -5px;
+	margin-left: 130px;
+}
+
+/************
+ * TOOLTIPS *
+ ************/
+a.q-tool-tip, a.q-tool-tip:hover, a.q-tool-tip:visited {
+	color: black;
+}
+
+/***************
+ * MAP CONTENT *
+ ***************/
+#map-content {
+	height: 100% !important;
+	float:	right;
+	width: calc(100% - 430px);
+	padding-left: 10px;
+}
+
+.map-canvas {
+	height:100%;
+	/*width: 50%;*/
+	display: flex;
+	border: 1px solid #ddd;
+}
+
+#map1 {
+	width: 100%;
+	vertical-align: top;
+}
+
+#map2 {
+	width: 50%;
+/*	width: 100%;
+	height: 50%;*/
+	vertical-align: bottom;
+}
+
+
+/*******************
+ * LAYER DROPDOWNS *
+ *******************/
+#leftLayerSelect {
+	position: absolute;
+	left: 625px;
+	top: 65px;
+}
+
+#rightLayerSelect {
+	position: absolute;
+	left: calc(50% + 390px);
+	top: 65px;
+}
+
+.dropdown-toggle {
+	background-color: #FFF;
+	height: 30px;
+	vertical-align: middle;
+	line-height: normal;
+}
+
+.dropdown:hover .dropdown-menu {
+	display: block;
+}
+
+.dropdown-menu {
+	margin-top: 0px;
+	background-color: #e2edff;
+}
+
+.list-layer {
+	display: flex; 
+	flex-direction: row;
+	padding-right: 10px;
+	border: 1px solid #e2edff;
+	background: -webkit-linear-gradient(left, #e2edff 0%, white 0%);
+	background: -moz-linear-gradient(left, #e2edff 0%, white 0%);
+	background: -ms-linear-gradient(left, #e2edff 0%, white 0%);
+	background: linear-gradient(left, #e2edff 0%, white 0%);
+}
+
+.layer-checkbox {
+	margin-top: 10px !important;
+	margin-left: 10px !important;
+	margin-right: 10px !important;
+}
+
+.list-layer > h5 {
+	white-space: nowrap;
+	width: 130px;
+	text-align: left;
+}
+
+.layer-slider {
+	width: 100px !important;
+}
+
+/******************
+ * EXPORT MANAGER *
+ ******************/
+.list-group {
+	margin-bottom: 0px;
+}
+
+.list-group-item {
+	display: flex;
+	flex-direction: row;
+	padding-top: 2px;
+	padding-right: 0px;
+	padding-bottom: 2px;
+	padding-left: 0px;
+	border: none;
+}
+
+.list-group-item > h5 {
+	white-space: nowrap;
+	text-align: left;
+	width: 100%;
+	margin-right: 5px;
+	margin-bottom: 3px;
+	margin-top: 1px;
+	padding: 9px;
+	background: #f0f0f0;
+	border-radius: 3px;
+}
+
+.exportBlock {
+	white-space: nowrap;
+	width: 90px;
+}
+
+h5.exportBlock {
+	text-align: center;
+}
+
+.progressSpinner {
+	margin-top: 5px;
+}
+
+.layerSpinner {
+	margin-top: 5px;
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+/*********
+ * CHART *
+ *********/
+#chart-div {
+	width: 396;
+	cursor: pointer;
+	/*border: 1px solid black;*/
+}
+
+#chart-modal-div {
+	margin-right: 20px;
+}
+
+#legend-block {
+	margin-top: 10px;
+}
+
+#table-legend td.color {
+	width: 20px;
+	height: 20px;
+	background-color: aqua;
+}
+
+#table-legend td.label {
+	vertical-align: middle;
+	color: black;
+}
+
+#table-legend td.legend {
+	width: 20%;
+}
+
+#table-legend td.color#gain {
+	background-color: #82d074;
+}
+#table-legend td.color#no-change {
+	background-color: #000000;
+}
+#table-legend td.color#loss {
+	background-color: #8d3d77;
+}
+
+
+/*********
+ * TABLE *
+ *********/
+#confMat {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#confMat .meta-th {
+	text-align: center;
+	background-color: white;
+}
+
+#confMat .full-border {
+	border: 1px solid black;
+}
+
+#confMat .lr-border {
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+}
+
+#confMat .tb-border {
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+#confMat tr:nth-last-child(2)>td, #confMat tr:nth-last-child(2)>th {
+	border-bottom: none;
+}
+
+#confMat tr>td:nth-last-child(2) {
+	border-right: none;
+}
+
+#confMat td, #confMat th {
+	border: 1px solid #ddd;
+	padding: 5px;
+	font-size: 14;
+}
+
+#confMat tr:hover {
+	background-color: #f2f2f2;
+}
+
+#confMat th {
+	text-align: left;
+}
+
+#confMat td {
+	text-align: right;
+}
+
+
+/**********
+ * MODALS *
+ **********/
+.modal {
+	text-align: center;
+	padding: 0!important;
+}
+
+.modal:before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -4px; /* Adjusts for spacing */
+}
+
+.modal-dialog {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+}
+
+#confMat-dialog {
+	position: relative;
+	/*display: table;  This is important  */
+	overflow-y: auto;    
+	overflow-x: auto;
+	width: auto;
+	min-width: 600px;   
+}
+
+#errorModal p {
+	white-space: pre-wrap;
+}
+
+#chartModal .modal-dialog {
+	width: 70%;
+}
+
+.close {
+	z-index: 1000;
+}
+
+/**********
+ * SPINNER *
+ **********/
+#gearSpinner {
+	position: fixed;
+	top: 45%;
+	left: calc(50% + 178px);
+	z-index: 1000;
+ }
+
+.progress {
+	width: calc(50% - 228px);
+	position: fixed;
+	top: calc(45% + 105px);
+	height: 15px;
+	left: calc(25% + 341px);
+	z-index: 1000;
+}
+
+.progress-bar {
+	max-width: calc(50% - 228px);
+	position: fixed;
+	top: calc(45% + 105px);
+	height: 15px;
+	left: calc(25% + 341px);
+	z-index: 1000;
+}
+
+@-moz-keyframes spin {
+	0% {
+		-moz-transform: rotate(0deg); }
+
+	100% {
+		-moz-transform: rotate(359deg); } }
+
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg); }
+
+	100% {
+		-webkit-transform: rotate(359deg); } }
+
+@-o-keyframes spin {
+	0% {
+		-o-transform: rotate(0deg); }
+
+	100% {
+		-o-transform: rotate(359deg); } }
+
+@-ms-keyframes spin {
+	0% {
+		-ms-transform: rotate(0deg); }
+
+	100% {
+		-ms-transform: rotate(359deg); } }
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg); }
+
+	100% {
+		transform: rotate(359deg); } }
+
+.fa-spin {
+	display: inline-block;
+	-moz-animation: spin 2s infinite linear;
+	-o-animation: spin 2s infinite linear;
+	-webkit-animation: spin 2s infinite linear;
+	animation: spin 2s infinite linear; 
+}
