@@ -103,12 +103,12 @@ var tableObj;
 
 $(document).ready(function(){
 	// Load the html pages
-	$('#home-page').load('../html/home.html');
-	$('#about-page').load('../html/about.html');
-	$('#data-page').load('../html/data.html');
-	$('#map-page').load('../html/map.html');
-	$('#frag-page').load('../html/frag.html');
-	$('#ref-page').load('../html/ref.html');
+	$('#home-page').load('./html/home.html');
+	$('#about-page').load('./html/about.html');
+	$('#data-page').load('./html/data.html');
+	$('#map-page').load('./html/map.html');
+	$('#frag-page').load('./html/frag.html');
+	$('#ref-page').load('./html/ref.html');
 
 	// On clicking the navigation bar, hide the pages, and
 	// only show the desired page div
