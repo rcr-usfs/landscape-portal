@@ -865,7 +865,7 @@ function createInputs(){
 			// Define study area
 			if (geometryPolygon != undefined){
 				// Convert polygon to Earth Engine geometry if it is at least a triangle
-				if (geometryPolygon.getPath().j.length > 2){
+				if (geometryPolygon.getPath().g.length > 2){
 					studyAreaDrawn = convertPathtoGeometry(geometryPolygon);
 				}
 			}
@@ -1311,7 +1311,7 @@ function centerObject(fc,map){
 
 // Function to convert the hand drawn path into an EE polygon
 function convertPathtoGeometry(polygon){
-	var coordinates = polygon.getPath().j;
+	var coordinates = polygon.getPath().g;
 	var coordinatesList = coordinates.map(function(coord){
 		return [coord.lng(),coord.lat()];
 	});
