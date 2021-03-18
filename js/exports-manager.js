@@ -31,13 +31,34 @@ function exportLayers(){
 			var timeStamp = now[2] + '_' + now[1] + '_' + now[3] + '_' + now[4].replace(/:/g,'');
 			// var timeStamp = Math.round(new Date().getTime()/1000.0).toString();
 			var outputName = currentName + '_' + timeStamp;
-			var IDAndParams = getIDAndParams(currentObject, currentBoundary, outputName, crsValue, 30);
+			var task = getIDAndParams(currentObject, currentBoundary, outputName, crsValue, 30);
 			// console.log('REMEMBER TO FIX RESOLUTION BACK TO 30');
-			ee.data.startProcessing(IDAndParams['id'], IDAndParams['params']);
-			cacheExport(IDAndParams['id'], outputName, currentExportID);
+			// function startTask(startCount){
+   //              console.log('Starting task');
+   //              task.start(function(){
+   //                  console.log('here')
+   //                  meta_template_strT = '{}';
+   //                  cacheExport(currentExportID, currentName, currentExportID);
+			// 		$('#exportStartButton-' + currentExportID.toString()).hide();
+			// 		$('#exportInProgress-' + currentExportID.toString()).show().css('display','flex');
+			// 		$('#exportCancelButton-' + currentExportID.toString()).val(currentExportID);
+   //                  },
+   //              function(fail){
+   //                  console.log(fail);
+   //                  startCount++
+   //                  if(startCount < 5){
+   //                  	startTask(startCount);	
+   //                  }
+   //              })};
+   //          startTask(0);
+            task.start();
+            cacheExport(outputName, outputName, currentExportID);
 			$('#exportStartButton-' + currentExportID.toString()).hide();
 			$('#exportInProgress-' + currentExportID.toString()).show().css('display','flex');
-			$('#exportCancelButton-' + currentExportID.toString()).val(IDAndParams['id']);
+			$('#exportCancelButton-' + currentExportID.toString()).val(currentExportID);
+			
+			
+			
 		});
 
 		// On mouse over progress, show cancel button
@@ -101,31 +122,76 @@ function addToExports(eeObject, eeBoundary, name){
 }
 
 // Function to get the ID and parameters for a new export task
-function getIDAndParams(eeImage, eeBoundary, exportOutputName, exportCRS, exportScale){
-	// eeImage = eeImage.clip(fc);
-	var imageJson = ee.Serializer.toJSON(eeImage);
-	//Currently cannot handle multiple tile exports for very large exports
-	outputURL = 'https://console.cloud.google.com/m/cloudstorage/b/' + bucketName + '/o/' + exportOutputName + '.tif'
-	var region = JSON.stringify(eeBoundary.bounds().getInfo());
-	// var region = JSON.stringify([  [    -118.77559661865234,    44.060205998986504  ],  [    -118.77662658691406,    44.14821773175327  ],  [    -118.93524169921875,    44.148710425584085  ],  [    -118.93661499023438,    44.06217968592229  ],  [    -118.77559661865234,    44.060205998986504  ]]);
-	// var region = JSON.stringify([ [-102.5079345703125,32.29583937894437], [-102.50930786132812,32.35270287134305], [-102.57797241210938,32.35444302709291], [-102.57728576660156,32.29816103674399],  [-102.5079345703125,32.29583937894437] ]);
-	// console.log('REMEMBER TO RESET REGION');
-	//Set up parameter object
-	var params = {
-		json: imageJson,
-		type: 'EXPORT_IMAGE',
-		description: exportOutputName,
-		region: region,
-		outputBucket: bucketName,
-		maxPixels: 1e13,
-		outputPrefix: exportOutputName,
-		crs: exportCRS,
-		scale: exportScale
-	}
+var testExport = {}
+function runTestExport(){
+	testExport.img = ee.Image(1);
+	testExport.geo = ee.Feature(ee.Geometry.Polygon(
+        [[[-113.16413449445352, 38.30621132413199],
+          [-113.16413449445352, 38.302641573461436],
+          [-113.16095875897989, 38.302506862449256],
+          [-113.15838383832559, 38.30580721023283]]]));
+	testExport.name = 'test-export'
+	addToExports(testExport.img, testExport.geo, testExport.name)
+	// var task = getIDAndParams(testExport.img, testExport.geo, 'test-export', 'EPSG:5070', 30);
+	// console.log(task)
 
-	//Set up a task and update the spinner
-	taskID = ee.data.newTaskId(1)
-	return {'id': taskID, 'params': params}
+	// //Start processing
+ //    function startTask(){
+ //        console.log('Starting task');
+ //        task.start(function(){
+ //            console.log('success!!')
+ //            // meta_template_strT = '{}';
+ //            cacheExport(exportName,exportName);
+ //            },
+ //        function(fail){
+ //            console.log(fail);
+ //            startTask();
+ //        })};
+ //    startTask();
+
+
+}
+function getIDAndParams(eeImage,eeBoundary,exportOutputName,exportCRS,exportScale){
+	var noDataValue = -32768;
+    eeImage = ee.Image(eeImage.clip(eeBoundary).unmask(noDataValue,false)).int16();//.reproject(exportCRS,null,exportScale);
+    
+    
+
+    outputURL = 'https://storage.googleapis.com/'+bucketName+'/'+exportOutputName +'.tif'//Currently cannot handle multiple tile exports for very large exports
+    
+    console.log('exporting')
+    try{
+    	var region = JSON.stringify(eeBoundary.geometry().bounds().getInfo()); 
+    }catch(err){
+    	var region = JSON.stringify(eeBoundary.bounds().getInfo()); 
+    }
+    // console.log(region)
+    
+    
+    
+    // //Set up parameter object
+    // var params = {
+    //     json:imageJson,
+    //     type:'EXPORT_IMAGE',
+    //     description:exportOutputName,
+    //     region:region,
+    //     outputBucket:bucketName ,
+    //     outputPrefix: exportOutputName,
+    //     crs:exportCRS,
+    //     crsTransform:null,
+    //     scale: exportScale,
+    //     maxPixels:1e13,
+    //     shardSize:256,
+    //     fileDimensions:256*75
+    //     }
+
+    // //Set up a task and update the spinner
+    // taskId = ee.data.newTaskId(1)
+
+    var task = ee.batch.Export.image.toCloudStorage(eeImage, exportOutputName, bucketName, exportOutputName, null, region, exportScale, exportCRS, null, 1e13, 256, 256*75);
+    
+
+    return task;
 }
 
 // Function to cache export status
@@ -136,7 +202,7 @@ function cacheExport(id, outputName, currentExportID){
 		'updated': false,
 		'start-time': Date.parse(new Date()),
 		'outputName': outputName,
-		'outputLink': 'https://console.cloud.google.com/m/cloudstorage/b/'+ bucketName + '/o/' + outputName +'.tif',
+		'outputLink': 'https://storage.googleapis.com/'+ bucketName + '/' + outputName +'.tif',
 		'exportID': currentExportID
 	}
 	// localStorage.setItem("export_settings",JSON.stringify(export_settings));
@@ -150,8 +216,8 @@ function trackExports(){
 	// Check the status of each task
 	taskList.map(function(t){
 		// Check if the task is in the user's cache
-		if (Object.keys(export_settings).indexOf(t.id) >-1){
-			var currentCachedTask = export_settings[t.id];
+		if (Object.keys(export_settings).indexOf(t.description) >-1){
+			var currentCachedTask = export_settings[t.description];
 			var currentExportID = currentCachedTask['exportID'];
 			var currentLink = currentCachedTask['outputLink'];
 			var currentST = currentCachedTask['start-time'];
@@ -160,8 +226,8 @@ function trackExports(){
 				var now = new Date();
 				var timeDiff = now - currentST;
 				timeDiff = parseTime(timeDiff);
-				$('#exportInProgressText-' + currentExportID.toString()).text(timeDiff);
-				export_settings[t.id]['status'] = 'running';
+				$('#exportInProgressText-' + currentExportID.toString()).text(t.state + ': ' + timeDiff.toString());
+				export_settings[t.description]['status'] = 'running';
 
 			// Check if the task is completed (but not downloaded)
 			} else if (t.state === 'COMPLETED' && currentCachedTask.downloaded === false){
@@ -171,8 +237,8 @@ function trackExports(){
 				$('#exportText-' + currentExportID.toString()).css({'background': '#4D90FE', 'color': '#fff'});
 				$('#exportDownloadButton-' + currentExportID.toString()).attr({'href': currentLink, 'target': '_blank'});
 				$('#exportDownloadButton-' + currentExportID.toString()).show();
-				export_settings[t.id]['downloaded'] = true;
-				export_settings[t.id]['status'] = 'completed';
+				export_settings[t.description]['downloaded'] = true;
+				export_settings[t.description]['status'] = 'completed';
 
 			// Check if the task is failed (but not updated)
 			} else if (t.state === 'FAILED' && currentCachedTask.updated === false){
@@ -180,8 +246,8 @@ function trackExports(){
 				$('#exportCancelButton-' + currentExportID.toString()).hide();
 				$('#exportText-' + currentExportID.toString()).css({'background': '#D64A38', 'color': '#fff'});
 				$('#exportFailed-' + currentExportID.toString()).show();
-				export_settings[t.id]['updated'] = true;
-				export_settings[t.id]['status'] = 'failed';
+				export_settings[t.description]['updated'] = true;
+				export_settings[t.description]['status'] = 'failed';
 
 			// Check if the task is canceled (but not updated)
 			} else if ((t.state === 'CANCELLED' || t.state === 'CANCEL_REQUESTED') && currentCachedTask.updated === false){
@@ -189,8 +255,8 @@ function trackExports(){
 				$('#exportCancelButton-' + currentExportID.toString()).hide();
 				$('#exportText-' + currentExportID.toString()).css({'background': '#777777', 'color': '#fff'});
 				$('#exportCanceled-' + currentExportID.toString()).show();
-				export_settings[t.id]['updated'] = true;
-				export_settings[t.id]['status'] = 'canceled';
+				export_settings[t.description]['updated'] = true;
+				export_settings[t.description]['status'] = 'canceled';
 			}
 		}
 	});

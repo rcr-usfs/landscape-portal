@@ -322,6 +322,7 @@ function createInputs(){
 			map1.addListener('click', function(event) {
 				if (polygonVisible){
 					var path = geometryPolygon.getPath();
+					// console.log(path.getArray());
 					var yx = event.latLng;
 					path.push(yx);
 				}
@@ -331,7 +332,7 @@ function createInputs(){
 
 	// On clicking the geometry show/hide button
 	$('#geometryShowHideButton').click(function(){
-		if (geometryPolygon.getPath().length > 0) {
+		if (geometryPolygon.getPath().getArray().length > 0) {
 			if (polygonVisible){
 				geometryPolygon.setMap(null);
 				polygonVisible = false;
@@ -484,7 +485,8 @@ function createInputs(){
 
 			// Set mouseover event for each feature.
 			trainingDataLayer.addListener('click', function(event) {
-				var values = event.feature.l;
+				// console.log(event);
+				var values = event.feature.i;
 				var outText = '';
 				Object.keys(values).map(function(k){
 					outText = outText + k + ': '+values[k] + '\n';
@@ -865,7 +867,7 @@ function createInputs(){
 			// Define study area
 			if (geometryPolygon != undefined){
 				// Convert polygon to Earth Engine geometry if it is at least a triangle
-				if (geometryPolygon.getPath().g.length > 2){
+				if (geometryPolygon.getPath().getArray().length > 2){
 					studyAreaDrawn = convertPathtoGeometry(geometryPolygon);
 				}
 			}
@@ -1311,7 +1313,7 @@ function centerObject(fc,map){
 
 // Function to convert the hand drawn path into an EE polygon
 function convertPathtoGeometry(polygon){
-	var coordinates = polygon.getPath().g;
+	var coordinates = polygon.getPath().getArray();
 	var coordinatesList = coordinates.map(function(coord){
 		return [coord.lng(),coord.lat()];
 	});

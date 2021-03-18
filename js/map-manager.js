@@ -254,36 +254,86 @@ function addToMap(eeObject,vizParams,name,visible,map){
 
 function getMapWrapper(eeObject,vizParams,name,visible,map,layerSuccess,currentLayer,currentLayerID){
 	console.log('Attempting to add layer: ' + name);
-	var currentRunTime = new Date();
-	if ((layerSuccess == 0) && (currentRunTime - startRunTime < maxRunTime)){
-		eeObject.getMap(vizParams, function(mapItem){
-			try{
+	// var currentRunTime = new Date();
+	// if ((layerSuccess == 0) && (currentRunTime - startRunTime < maxRunTime)){
+		eeObject.getMap(vizParams, function(mapItem,failure){
+			if(mapItem === undefined || failure !== undefined && layerSuccess > 5){
+                console.log('Failed to add layer: ' + name);
+				$('input[type="checkbox"][field="'+ currentLayerID.toString() +'"]').parent()[0].setAttribute('style', 'background: #D85656');
+				$('input[type="checkbox"][field="'+ currentLayerID.toString() +'"]').parent()[0].setAttribute('title', 'Layer failed to load. Error message: "'+failure + '"');
+				$('#layer-spinner-' + currentLayerID.toString()).hide();
+				$('#layer-checkbox-' + currentLayerID.toString()).show().attr('disabled', true);
+				$('#layer-slider-' + currentLayerID.toString()).attr('disabled', true);
+				
+                }
+            else if(mapItem === undefined || failure !== undefined && layerSuccess <= 5){
+            	console.log('Failed to add layer: ' + name);
+            	console.log('Retrying to add layer: '+name + ' iteration: '+layerSuccess.toString());
+            	layerSuccess++;
+            	getMapWrapper(eeObject,vizParams,name,visible,map,layerSuccess,currentLayer,currentLayerID);
+            }
+            else{
+			// try{
 				layerSuccess = 1;
 				var highWaterMark = 0;
 				var percent = 0;
-
-				var layer = new ee.MapLayerOverlay('https://earthengine.googleapis.com/map', mapItem['mapid'], mapItem['token'], {});
-
-				layer.addTileCallback(function(event){
-					// console.log(event);
-					if(event.count > highWaterMark){
-						highWaterMark = event.count;
-					}
-					percent = 100 - ((event.count / highWaterMark) * 100);
-					var progressStyle = [
+				const tilesUrl = mapItem.urlFormat;
+				var getTileUrlFun = function(coord, zoom) {
+                    var t = [coord,zoom];
+                        
+                        
+                    let url = tilesUrl
+                                .replace('{x}', coord.x)
+                                .replace('{y}', coord.y)
+                                .replace('{z}', zoom);
+                    var percent = 25;
+                    var progressStyle = [
 						'background: -webkit-linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)',
 						'background: -moz-linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)',
 						'background: -ms-linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)',
 						'background: linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)'
 					].join(';');
 					$('input[type="checkbox"][field="'+ currentLayerID.toString() +'"]').parent()[0].setAttribute('style', progressStyle);
-				});
+                    
+                    return url
+                }
+				var layer = new google.maps.ImageMapType({
+                            getTileUrl:getTileUrlFun
+                        })
+
+				// var layer = new ee.MapLayerOverlay('https://earthengine.googleapis.com/map', mapItem['mapid'], mapItem['token'], {});
+
+				// layer.addTileCallback(function(event){
+				// 	// console.log(event);
+				// 	if(event.count > highWaterMark){
+				// 		highWaterMark = event.count;
+				// 	}
+				// 	percent = 100 - ((event.count / highWaterMark) * 100);
+				// 	var progressStyle = [
+				// 		'background: -webkit-linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)',
+				// 		'background: -moz-linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)',
+				// 		'background: -ms-linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)',
+				// 		'background: linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)'
+				// 	].join(';');
+				// 	$('input[type="checkbox"][field="'+ currentLayerID.toString() +'"]').parent()[0].setAttribute('style', progressStyle);
+				// });
 
 				// Set current layer properties
 				currentLayer.layer = layer;
 				currentLayer.layerID = currentLayerID;
 				currentLayer.name = name;
 				currentLayer.map = map;
+
+				currentLayer.layer.addListener('tilesloaded',function(){
+					var percent = 100;
+                    var progressStyle = [
+						'background: -webkit-linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)',
+						'background: -moz-linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)',
+						'background: -ms-linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)',
+						'background: linear-gradient(left, #e2edff '+ percent +'%, white '+ percent +'%)'
+					].join(';');
+					$('input[type="checkbox"][field="'+ currentLayerID.toString() +'"]').parent()[0].setAttribute('style', progressStyle);
+                    })
 
 				// Display layer on correct map if visible is set to true, and add layer to dropdown menu
 				if (visible){
@@ -296,20 +346,21 @@ function getMapWrapper(eeObject,vizParams,name,visible,map,layerSuccess,currentL
 				$('#layer-checkbox-' + currentLayerID.toString()).show();
 				$('#layer-slider-' + currentLayerID.toString()).show();
 				console.log('Succeeded in adding layer: ' + name);
-			}
-			catch(err){
-				console.log(err);
-				layerSuccess = 0;
-				getMapWrapper(eeObject,vizParams,name,visible,map,layerSuccess,currentLayer,currentLayerID);
+			// }
+			// catch(err){
+			// 	console.log(err);
+			// 	layerSuccess = 0;
+			// 	getMapWrapper(eeObject,vizParams,name,visible,map,layerSuccess,currentLayer,currentLayerID);
+			// }
 			}
 		});
-	} else {
-		console.log('Failed to add layer: ' + name);
-		$('input[type="checkbox"][field="'+ currentLayerID.toString() +'"]').parent()[0].setAttribute('style', 'background: #D85656');
-		$('#layer-spinner-' + currentLayerID.toString()).hide();
-		$('#layer-checkbox-' + currentLayerID.toString()).show().attr('disabled', true);
-		$('#layer-slider-' + currentLayerID.toString()).attr('disabled', true);
-	}
+	// } else {
+	// 	console.log('Failed to add layer: ' + name);
+	// 	$('input[type="checkbox"][field="'+ currentLayerID.toString() +'"]').parent()[0].setAttribute('style', 'background: #D85656');
+	// 	$('#layer-spinner-' + currentLayerID.toString()).hide();
+	// 	$('#layer-checkbox-' + currentLayerID.toString()).show().attr('disabled', true);
+	// 	$('#layer-slider-' + currentLayerID.toString()).attr('disabled', true);
+	// }
 }
 
 // Function to toggle a layer on and off with a checkbox

@@ -76,7 +76,7 @@ var yearsOfImagery;
 
 
 // Declare EE output globals
-var bucketName = 'test-bucket-housman2'; //Will need to set permissions for reading and writing using: gsutil acl ch -u AllUsers:W gs://example-bucket and gsutil acl ch -u AllUsers:R gs://example-bucket
+var bucketName = 'landscape-pattern-bucket';//'test-bucket-housman2'; //Will need to set permissions for reading and writing using: gsutil acl ch -u AllUsers:W gs://example-bucket and gsutil acl ch -u AllUsers:R gs://example-bucket
 var changeClassification;
 var changeMask;
 var chartData;
@@ -185,14 +185,15 @@ $(window).on('beforeunload', function() {
 google.maps.event.addDomListener(window, 'load', function(){
 	initializeOnChange();
 });
-
+var authProxyAPIURL = "https://rcr-ee-proxy-2.herokuapp.com";
+var geeAPIURL = "https://earthengine.googleapis.com";
 function initialize(){
-	ee.initialize("https://rcr-ee-proxy.herokuapp.com/api","https://earthengine.googleapis.com/map",function(){
+	ee.initialize(authProxyAPIURL,geeAPIURL,function(){
 		createMap();
 		createInputs();
 	});
 };
 
 function initializeOnChange(){
-	ee.initialize("https://rcr-ee-proxy.herokuapp.com/api","https://earthengine.googleapis.com/map",function(){});
+	ee.initialize(authProxyAPIURL,geeAPIURL,function(){});
 };

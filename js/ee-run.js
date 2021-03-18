@@ -147,7 +147,7 @@ function runEECode(){
 	});
 	
 	console.log('Running classification model');
-	var rfClassifier = ee.Classifier.randomForest(nTrees, 0, 1, 0.5, true, 0)
+	var rfClassifier = ee.Classifier.smileRandomForest(nTrees)
 		.train(rfTrainingData, classNumbersField, compositeBands.removeAll(droplist));
 	rfModelConfusion = rfClassifier.confusionMatrix();
 	console.log('Finished running classification model');
